@@ -1,25 +1,19 @@
 module MyEnumerable
     def all?
-        answer = false;
-        @list.each do |item|
-            answer = true if yield(item)
-            return false unless yield(item)
-        end
+        answer = true;
+        each {|item| answer = false unless yield(item)}
         answer
         end
-    
+
     def any?
-        @list.each do |item|
-        return true if yield(item)
+        answer = false;
+        each {|item| answer = true if yield(item)}
+        answer
         end
-        false;
-    end
 
     def filter
-        odd = []
-        @list.select do |item|
-            odd.push(item) if yield(item)
+        result = []
+        each {|item| result.push(item) if yield(item)}
+        result
         end
-        odd
-    end
 end
